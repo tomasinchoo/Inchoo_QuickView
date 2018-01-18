@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <update handle="empty"/>
+
+    <html>
+        <attribute name="class" value="quickview-scroll"/>
+    </html>
+
+    <body>
+        <attribute name="class" value="quickview-override"/>
+
+        <referenceContainer name="product.page.products.wrapper" remove="true" />
+        <referenceContainer name="product.info.details" remove="true" />
+        <referenceBlock name="reviews.tab" remove="true" />
+        <referenceBlock name="product.info.details" remove="true" />
+        <referenceBlock name="product.info.description" remove="true" />
+        <referenceBlock name="product.info.overview" remove="true" />
+        <referenceBlock name="authentication-popup" remove="true" />
+    </body>
+</page>
