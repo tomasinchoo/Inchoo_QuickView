@@ -8,6 +8,8 @@ use Magento\Catalog\Controller\Product\View as CatalogView;
  * Class View
  *
  * @package Inchoo\QuickView\Controller\Product
+ * @author Tomas Novoselić <tomas@inchoo.net>
+ * @copyright Inchoo d.o.o.
  */
 class View extends CatalogView
 {
