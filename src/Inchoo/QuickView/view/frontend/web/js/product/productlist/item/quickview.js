@@ -25,7 +25,6 @@ define([
             }]
         };
 
-
         var popup = modal(options, $('#quickViewContainer' + product_id));
 
         $("#quickViewButton" + product_id).on("click", function () {
@@ -41,30 +40,33 @@ define([
             $(iframe_selector).on("load", function () {
                 modalContainer.addClass("product-quickview");
                 modalContainer.modal('openModal');
-                this.style.height = this.contentWindow.document.body.scrollHeight+10 + 'px';
-                this.style.border = '0';
-                this.style.width = '100%';
-                observeAddToCart(this);
+                observeAddToCart(iframe_selector);
             });
         };
 
-        var observeAddToCart = function (iframe) {
+        var observeAddToCart = function (iframe_selector) {
+            var doc = $(iframe_selector)[0].contentWindow.document;
 
-            var doc = iframe.contentWindow.document;
-
-            $(doc).contents().find('#product_addtocart_form').submit(function(e) {
+            $(doc).on('submit', "#product_addtocart_form", function (e) {
                 e.preventDefault();
+
+                $('[data-block="minicart"]').trigger('contentLoading');
+                $('body').trigger('processStart');
+                $(".close-modal").trigger("click");
+
                 $.ajax({
                     data: $(this).serialize(),
                     type: $(this).attr('method'),
                     url: $(this).attr('action'),
                     success: function(response) {
-                        customerData.reload("cart");
-                        customerData.reload("messages");
-                        $(".close-modal").trigger("click");
-                        $('[data-block="minicart"]').find('[data-role="dropdownDialog"]').dropdownDialog("open");
+                        
+$('[data-block="minicart"]').find('[data-role="dropdownDialog"]').dropdownDialog("open");
+                    },
+                    complete: function(request, status) {
+                        $('body').trigger('processStop');
                     }
                 });
+
             });
         };
 
